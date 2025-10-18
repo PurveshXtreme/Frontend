@@ -268,7 +268,7 @@ console.log(geek);         // Output: GeeksforGeeks
 ---
 ---
 
-## 📘 Data Types & Type Checking
+# Data Types & Type Checking
 
 ---
 
@@ -441,7 +441,7 @@ Automatic type conversion makes JavaScript flexible but can cause **unexpected r
 ---
 ---
 
-## 📘 JavaScript Fundamentals
+# JavaScript Fundamentals
 
 ---
 
