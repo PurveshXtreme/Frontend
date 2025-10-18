@@ -24,7 +24,7 @@
 ---
 
 
-# 📋 **Operators & Comparisons**
+#  **Operators & Comparisons**
 
 ---
 
