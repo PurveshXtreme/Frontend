@@ -124,3 +124,146 @@ JSON.stringify(a) === JSON.stringify(b); // true
 ---
 ---
 
+# Variables & Scope
+
+---
+
+### **Q8 - What’s the difference between `var`, `let`, and `const` and what is the Temporal Dead Zone (TDZ)?**
+
+JavaScript provides three ways to declare variables — **`var`**, **`let`**, and **`const`**, but they differ in **scope**, **hoisting behavior**, and **re-assignment rules**.
+
+| Keyword | Scope Type | Re-declaration | Re-assignment | Hoisting | Block Scope |
+|----------|-------------|----------------|----------------|-----------|--------------|
+| `var`   | Function / Global | ✅ Allowed | ✅ Allowed | ✅ (initialized with `undefined`) | ❌ |
+| `let`   | Block | ❌ Not Allowed (in same block) | ✅ Allowed | ⚠️ Hoisted but uninitialized (TDZ) | ✅ |
+| `const` | Block | ❌ Not Allowed | ❌ Not Allowed | ⚠️ Hoisted but uninitialized (TDZ) | ✅ |
+
+#### ✅ Example:
+
+```javascript
+// var: function or global scope, can be re-declared and updated
+var x = 10;
+var x = 20; // re-declaration allowed
+console.log("var:", x); // 20
+
+// let: block scope, can be updated but not re-declared in same block
+let y = 30;
+// let y = 40; // ❌ Error - can't re-declare in same block
+y = 40; // ✅ update allowed
+console.log("let:", y); // 40
+
+// const: block scope, cannot be reassigned
+const z = 50;
+// z = 60; // ❌ Error - can't reassign
+console.log("const:", z); // 50
+```
+
+#### ⚡ Temporal Dead Zone (TDZ)
+
+The **Temporal Dead Zone** is the period between entering a scope and the actual declaration of a `let` or `const` variable.  
+During this time, accessing the variable results in a **ReferenceError**, even though the variable is hoisted.
+
+```javascript
+// TDZ example
+console.log(a); // ❌ ReferenceError (a is in TDZ)
+let a = 10;
+
+console.log(b); // ✅ undefined (var is initialized during hoisting)
+var b = 10;
+```
+
+---
+
+### **Q9 - What is a Variable Scope in JavaScript?**
+
+A **variable’s scope** determines **where** it can be accessed or modified in your code.
+
+#### 🧭 Types of Scope:
+
+1. **Global Scope** – Declared outside any function or block and accessible everywhere.  
+2. **Local Scope** – Declared inside a function or block; accessible only within it.  
+3. **Function Scope** – Variables declared with `var` inside a function exist only in that function.  
+4. **Block Scope** – Variables declared with `let` or `const` are confined to that block (`if`, `for`, `{}` etc.).
+
+#### ✅ Example:
+```javascript
+var globalVar = "I'm global";
+
+function example() {
+  let localVar = "I'm local";
+  console.log(globalVar); // ✅ accessible
+  console.log(localVar);  // ✅ accessible
+}
+example();
+
+console.log(globalVar); // ✅ accessible
+// console.log(localVar); ❌ ReferenceError (not accessible outside)
+```
+
+---
+
+### **Q10 - What is the difference between Lexical and Dynamic Scoping?**
+
+#### 🧩 **Lexical Scoping (Static Scoping)**
+
+- Scope is **determined by where variables are written** in the code.  
+- JavaScript uses **lexical scoping**.  
+- Functions can access variables from the outer scope **where they are defined**, not from where they are called.
+
+```javascript
+let name = "Outer";
+
+function outer() {
+  let name = "Inner";
+  function show() {
+    console.log(name);
+  }
+  show(); // Output: Inner (lexical scope)
+}
+
+outer();
+```
+
+#### 🔄 **Dynamic Scoping (Not used in JS)**
+
+- Scope depends on **the call stack at runtime**, not the code position.  
+- Used in some languages like **Bash** or **older Lisp**.  
+- The called function would use variables from the **caller’s environment**, not its own lexical scope.
+
+---
+
+### **Q40 - What is Lexical Scope in JavaScript?**
+
+**Lexical scope** means a variable’s accessibility is determined by its **position in the source code**, not during execution.
+
+- Functions can access variables in their **own scope** and **outer scopes**, but not inner ones.
+- Inner functions “remember” the environment where they were defined — this concept also underlies **closures**.
+
+#### ✅ Example:
+```javascript
+let outer = "I am outside!";
+
+function inner() {
+    console.log(outer); // ✅ Accessible due to lexical scoping
+}
+
+inner(); // Output: I am outside!
+```
+
+---
+
+### **Q44 - What is called Variable Typing in JavaScript?**
+
+**Variable typing** in JavaScript means a variable can **hold values of different data types** at different times — JavaScript is **dynamically typed**.
+
+#### ✅ Example:
+```javascript
+let geek = 42;             // Number
+geek = "GeeksforGeeks";    // String
+console.log(geek);         // Output: GeeksforGeeks
+```
+
+📘 This flexibility makes JavaScript easy to use but can also lead to unexpected type coercions.
+
+---
+---
