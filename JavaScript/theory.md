@@ -267,3 +267,265 @@ console.log(geek);         // Output: GeeksforGeeks
 
 ---
 ---
+
+## 📘 Data Types & Type Checking
+
+---
+
+### **Q11 - What is the use of `isNaN`, and how is it different from `Number.isNaN()`?**
+
+In JavaScript, both are used to check whether a value is **NaN (Not a Number)** — but they behave differently due to **type coercion**.
+
+| Function | Description | Type Coercion | Example |
+|-----------|--------------|----------------|----------|
+| `isNaN(x)` | Converts the input to a number first, then checks if it’s `NaN`. | ✅ Yes | `isNaN("foo") → true` |
+| `Number.isNaN(x)` | Returns `true` **only if** the value is **exactly `NaN`**. | ❌ No | `Number.isNaN("foo") → false` |
+
+#### ✅ Examples:
+
+```javascript
+Number.isNaN(NaN);             // true
+Number.isNaN("foo");           // false  (string, not NaN)
+isNaN("foo");                  // true   (coerces "foo" → NaN)
+
+Number.isNaN(undefined);       // false
+isNaN(undefined);              // true   (undefined → NaN)
+
+Number.isNaN("");              // false
+isNaN("");                     // false  ("" → 0)
+
+Number.isNaN(0/0);             // true   (is NaN)
+isNaN(0/0);                    // true
+```
+
+---
+
+### **Q13 - What is Negative Infinity?**
+
+**Negative Infinity** (`-Infinity`) is a constant value that represents the **lowest possible numeric value** in JavaScript.  
+It occurs when a number is **divided by zero in a negative direction**.
+
+#### ✅ Example:
+```javascript
+console.log(-1 / 0); // -Infinity
+console.log(Number.NEGATIVE_INFINITY); // -Infinity
+```
+
+🧠 **Notes:**
+- No number is smaller than `-Infinity`.
+- It is of type `number`.
+- It can be compared, e.g., `(-Infinity < 0)` returns `true`.
+
+---
+
+### **Q14 - Why is `typeof null === "object"`?**
+
+This is a **long-standing bug** in JavaScript’s original design that cannot be fixed without breaking compatibility.
+
+- `null` is a **primitive value**, not an object.
+- Historically, values in memory were tagged; `null` had a zero tag (same as an object reference), so it mistakenly reports as `"object"`.
+
+#### ✅ Example:
+```javascript
+typeof null; // "object"
+```
+
+💡 **Tip:**  
+Always check for `null` using:
+```javascript
+if (value === null) { ... }   // safer
+```
+
+---
+
+### **Q16 - What are “Truthy” and “Falsy” values in JavaScript?**
+
+JavaScript evaluates values in a Boolean context (like `if` statements).  
+Some values are **falsy**, and everything else is **truthy**.
+
+| Falsy Values | Meaning |
+|---------------|----------|
+| `false` | Boolean false |
+| `0`, `-0`, `0n` | Zero or BigInt zero |
+| `""`, `''`, ```` | Empty string |
+| `null` | No value |
+| `undefined` | Not assigned |
+| `NaN` | Not a number |
+
+Everything else (non-empty strings, non-zero numbers, objects, arrays, etc.) is **truthy**.
+
+#### ✅ Example:
+```javascript
+if ("hello") console.log("Truthy!");  // ✅ Executed
+if (0) console.log("Falsy!");         // ❌ Not executed
+```
+
+---
+
+### **Q17 - What are Undeclared and Undefined Variables?**
+
+| Term | Description | Example |
+|------|--------------|----------|
+| **Undefined** | A variable that has been **declared but not assigned** any value. | `let x; console.log(x); // undefined` |
+| **Undeclared** | A variable that has **never been declared** using `var`, `let`, or `const`. Accessing it causes a **ReferenceError**. | `console.log(y); // ReferenceError` |
+
+#### ✅ Example:
+```javascript
+let a;
+console.log(a); // undefined
+
+console.log(b); // ❌ ReferenceError: b is not defined
+```
+
+🧠 **Note:**  
+`typeof undeclaredVar` returns `"undefined"` instead of throwing an error:
+```javascript
+console.log(typeof undeclaredVar); // "undefined"
+```
+
+---
+
+### **Q21 - What do you mean by Null in JavaScript?**
+
+`null` is a **primitive value** representing **no value** or **no object**.  
+It’s an **intentional absence** of any object or value.
+
+#### ✅ Example:
+```javascript
+let data = null; // explicitly no value
+console.log(data); // null
+console.log(typeof data); // "object" (historical bug)
+```
+
+---
+
+### **Q24 - What is the difference between `null` and `undefined` in JavaScript?**
+
+| Feature | `undefined` | `null` |
+|----------|--------------|--------|
+| Type | Primitive | Primitive |
+| Meaning | Variable declared but not assigned | Explicitly no value |
+| Assigned by | JavaScript engine | Developer |
+| Use case | Default placeholder | Intentional emptiness |
+
+#### ✅ Example:
+```javascript
+let x;
+console.log(x); // undefined
+
+let y = null;
+console.log(y); // null
+```
+
+🧠 **Analogy:**
+- `undefined` → “value not assigned yet”
+- `null` → “value intentionally empty”
+
+---
+
+### **Q35 - Does JavaScript support automatic type conversion?**
+
+✅ **Yes.**  
+JavaScript automatically converts values between types when needed — this is called **type coercion**.
+
+#### ✅ Example:
+```javascript
+console.log("5" + 1);  // "51" (number → string)
+console.log("5" - 1);  // 4   (string → number)
+console.log(true + 1); // 2   (boolean → number)
+```
+
+🧠 **Note:**  
+Automatic type conversion makes JavaScript flexible but can cause **unexpected results**, especially during equality checks (`==`).
+
+---
+---
+
+## 📘 JavaScript Fundamentals
+
+---
+
+### **Q3 - What’s new in ECMAScript 2025 (ES2025)?**
+
+ECMAScript 2025 introduces several **new features** to improve functionality, readability, and asynchronous handling:
+
+- **`Promise.withResolvers()`** → Returns a promise along with its `resolve` and `reject` functions, simplifying asynchronous control.
+- **Immutable Array Methods** → New methods like `findLast()`, `toReversed()`, and `toSorted()` return **new arrays** instead of mutating originals.
+- **RegExp `v` flag** → Improves **Unicode handling** in regular expressions.
+- **Hashbang Grammar** → Officially allows `#!` at the start of JS files for **CLI scripts**.
+
+---
+
+### **Q4 - Is JavaScript compiled or interpreted?**
+
+- JavaScript is **mostly interpreted**, but modern engines use **Just-In-Time (JIT) compilation** for better performance.
+- Execution flow:
+  1. Browser reads code line by line and interprets it.
+  2. Modern engines (like Chrome’s **V8**) convert parts of code into machine code during runtime for **faster execution**.
+
+---
+
+### **Q5 - Are JavaScript and Java related?**
+
+No — they are **completely different languages**. Despite the similar names, they differ in syntax, typing, and usage.
+
+| Feature | Java | JavaScript |
+|---------|------|------------|
+| Typing | Strongly typed, compile-time type checking | Loosely typed, dynamic type checking |
+| Purpose | Enterprise applications, object-oriented | Web scripting, dynamic interactive pages |
+| Runtime | Runs on JVM or browser | Originally browser only, now also server-side via Node.js |
+| Objects | Class-based | Prototype-based |
+
+---
+
+### **Q29 - Is JavaScript statically typed or dynamically typed?**
+
+JavaScript is **dynamically typed**:
+
+- Variable types are determined **at runtime**.
+- You do not need to declare the type when creating a variable; JavaScript infers it automatically.
+
+#### ✅ Example:
+```javascript
+let value = 42;    // number
+value = "Hello";   // string
+```
+
+---
+
+### **Q39 - Is JavaScript single-threaded or multi-threaded?**
+
+- JavaScript is **single-threaded** — it runs on a single main thread, executing one command at a time.
+- **Asynchronous features** (like `setTimeout`, Promises, and async/await) allow handling **multiple tasks efficiently** without blocking the main thread.
+
+#### ✅ Example:
+```javascript
+console.log("Start");
+
+setTimeout(() => {
+    console.log("Async task");
+}, 0);
+
+console.log("End");
+
+// Output:
+// Start
+// End
+// Async task
+```
+
+---
+
+### **Q54 - What is the difference between synchronous and asynchronous execution in JavaScript?**
+
+| Execution Type | Description | Example |
+|----------------|-------------|---------|
+| **Synchronous** | Code runs **line by line**, blocking subsequent code until current execution finishes. | `console.log("A"); console.log("B");` → Output: A B |
+| **Asynchronous** | Code runs **independently of the main thread**, allowing other operations to continue while waiting. | `setTimeout(() => console.log("C"), 1000); console.log("D");` → Output: D C |
+
+- **Synchronous** → predictable sequence, may cause blocking.
+- **Asynchronous** → non-blocking, used for I/O operations, timers, and network requests.
+
+---
+---
+
